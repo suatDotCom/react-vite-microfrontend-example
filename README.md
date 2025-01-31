@@ -28,19 +28,19 @@ This project is a micro frontend component library developed using React and Typ
 ## 🚀 Installation
 
 1. Clone the project:
-\`\`\`bash
+```bash
 git clone [repo-url]
-\`\`\`
+```
 
 2. Install dependencies:
-\`\`\`bash
+```bash
 npm install
 # or
 yarn install
-\`\`\`
+```
 
 3. Start the development server:
-\`\`\`bash
+```bash
 # To run only the host application
 npm run dev
 # or
@@ -50,13 +50,13 @@ yarn dev
 npm run dev:all
 # or
 yarn dev:all
-\`\`\`
+```
 
 ## 💻 Usage
 
 Detailed examples and usage guides for each component are available on the main page. To integrate components into your project:
 
-\`\`\`typescript
+```typescript
 import { Button, Card } from 'remoteComponents/Button';
 
 // Button Usage
@@ -72,7 +72,7 @@ import { Button, Card } from 'remoteComponents/Button';
 >
   Card content
 </Card>
-\`\`\`
+```
 
 ## 🤝 Contributing
 
