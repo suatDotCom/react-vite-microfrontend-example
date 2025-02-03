@@ -1,0 +1,7 @@
+{
+  "exposes": {
+    "./Button": "./src/components/Button",
+    "./Card": "./src/components/Card",
+    "./Header": "./src/components/Header"
+  }
+} 
