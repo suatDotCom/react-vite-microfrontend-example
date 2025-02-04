@@ -102,7 +102,7 @@ const Card = ({
       isClickable={!!onClick}
       role={onClick ? 'button' : 'article'}
       tabIndex={onClick ? 0 : undefined}
-      onKeyDown={onClick ? (e) => e.key === 'Enter' && onClick() : undefined}
+      onKeyDown={onClick ? (e: React.KeyboardEvent) => e.key === 'Enter' && onClick() : undefined}
       className={className}
       fullWidth={fullWidth}
       textAlign={textAlign}

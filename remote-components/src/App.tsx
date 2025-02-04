@@ -120,6 +120,7 @@ const App = () => {
               <Button variant="outline">Outline Button</Button>
             </ComponentGroup>
 
+            <h3>Button Sizes</h3>
             <ComponentGroup>
               <Button size="small">Small Button</Button>
               <Button size="medium">Medium Button</Button>

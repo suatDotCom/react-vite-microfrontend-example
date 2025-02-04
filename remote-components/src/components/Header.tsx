@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import styled, { keyframes } from 'styled-components';
+import { debounce } from '../utils/debounce';
 
 const HeaderContainer = styled.header`
   display: flex;
@@ -151,7 +152,7 @@ interface HeaderProps {
     url: string;
     external?: boolean;
   }>;
-  onSearch?: (query: string) => void;
+  onSearch: (value: string) => void;
   searchPlaceholder?: string;
   showShortcut?: boolean;
 }
@@ -171,15 +172,19 @@ const Header: React.FC<HeaderProps> = ({
   const [searchQuery, setSearchQuery] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
+  const debouncedSearch = useCallback(
+    debounce((value: string) => {
+      setIsLoading(false);
+      onSearch?.(value);
+    }, 500),
+    [onSearch]
+  );
+
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setSearchQuery(value);
     setIsLoading(true);
-    
-    setTimeout(() => {
-      setIsLoading(false);
-      onSearch?.(value);
-    }, 500);
+    debouncedSearch(value);
   };
 
   return (

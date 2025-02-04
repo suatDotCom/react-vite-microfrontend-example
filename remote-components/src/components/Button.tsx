@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components';
+import React from 'react';
 
 interface ButtonProps {
   variant?: 'primary' | 'secondary' | 'outline';
@@ -8,6 +9,7 @@ interface ButtonProps {
   disabled?: boolean;
   fullWidth?: boolean;
   type?: 'button' | 'submit' | 'reset';
+  className?: string;
 }
 
 const sizeStyles = {
@@ -50,7 +52,7 @@ const variantStyles = {
   `,
 };
 
-const StyledButton = styled.button<ButtonProps>`
+const StyledButton = styled.button<ButtonProps & { $fullWidth?: boolean }>`
   border-radius: 8px;
   border: none;
   font-weight: 600;
@@ -60,30 +62,45 @@ const StyledButton = styled.button<ButtonProps>`
   justify-content: center;
   cursor: ${props => props.disabled ? 'not-allowed' : 'pointer'};
   opacity: ${props => props.disabled ? 0.6 : 1};
-  width: ${props => props.fullWidth ? '100%' : 'auto'};
+  width: ${props => props.$fullWidth ? '100%' : 'auto'};
+
+  &:focus {
+    outline: 2px solid #0066cc;
+    outline-offset: 2px;
+  }
 
   ${props => sizeStyles[props.size || 'medium']}
   ${props => variantStyles[props.variant || 'primary']}
 `;
 
-const Button = ({
+const Button: React.FC<ButtonProps> = ({
   variant = 'primary',
   size = 'medium',
   onClick,
   children,
   disabled = false,
   fullWidth = false,
-  type = 'button'
-}: ButtonProps) => {
+  type = 'button',
+  className
+}) => {
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' && onClick && !disabled) {
+      onClick();
+    }
+  };
+
   return (
     <StyledButton
       type={type}
       variant={variant}
       size={size}
-      onClick={onClick}
+      onClick={disabled ? undefined : onClick}
       disabled={disabled}
-      fullWidth={fullWidth}
+      $fullWidth={fullWidth}
+      className={className}
       role="button"
+      tabIndex={disabled ? -1 : 0}
+      onKeyDown={handleKeyDown}
       aria-disabled={disabled}
     >
       {children}
