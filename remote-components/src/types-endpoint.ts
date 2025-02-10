@@ -1,7 +1,11 @@
 import { Project } from 'ts-morph';
-import * as path from 'path';
-import express, { Request, Response, NextFunction } from 'express';
-import * as fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import express from 'express';
+import fs from 'fs';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const project = new Project();
 
@@ -43,14 +47,14 @@ declare module 'remoteComponents/${componentName}' {
 const app = express();
 
 // CORS ayarları
-app.use((_req: Request, res: Response, next: NextFunction) => {
+app.use((_, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Methods', 'GET, OPTIONS');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   next();
 });
 
-app.get('/types', (_req: Request, res: Response) => {
+app.get('/types', (_, res) => {
   try {
     const types = getTypeDefinitions();
     res.setHeader('Content-Type', 'text/plain');
